@@ -1,0 +1,40 @@
+<!--entire div is just hide but present in the view-->
+<div [hidden]="hideRooms">
+    <h3> Welcome to {{hotelName}} </h3>
+
+    <!--property binding-->
+    <div [innerText]="availableRooms"></div>
+</div>
+
+{{rooms?.availableRooms ?? "No Rooms"}}
+
+<!--respective div is removed from view when condition doesnt satisfies-->
+<div *ngIf="rooms?.availableRooms">
+    Rooms List :
+    <table border="1px" class="table">
+        <tr>
+            <th> Room Number</th>
+            <th> Even/Odd
+            <th> Room Type</th>
+            <th> Amenities</th>
+            <th> Price</th>
+            <th> Photos</th>
+            <th> Checked In</th>
+        </tr>
+        <tr
+                [ngClass]=" e ? 'even' : 'odd'"
+                *ngFor="let room of roomList | slice : 0:3; let e = even ; let o = odd"
+        >
+            <td> {{room.roomNumber}} </td>
+            <td> {{e ? "Even" : "Odd"}}</td>
+            <td> {{room.roomType | uppercase}} </td>
+            <td> {{room.amenities}} </td>
+            <td> {{room.price | currency : 'INR'}} </td>
+            <td> {{room.photos}} </td>
+            <td> {{room.checkInTime | date : 'short'}} </td>
+        </tr>
+    </table>
+</div>
+
+<!--Event-binding-->
+<button (click)="toggle()"> Toggle</button>
